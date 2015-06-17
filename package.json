@@ -1,0 +1,31 @@
+{
+  "name": "iboot",
+  "version": "0.1.0",
+  "description": "Library for controlling an iBoot Remote Power Control device.",
+  "main": "./index.js",
+  "keywords": [
+	"iboot",
+	"remote",
+	"power",
+	"remote power",
+	"power switch",
+	"power control"
+  ],
+  "author": {
+    "name": "Chris Barber",
+    "email": "chris@cb1inc.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/cb1kenobi/iboot",
+  "bugs": "https://github.com/cb1kenobi/iboot/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cb1kenobi/iboot.git"
+  },
+  "dependencies": {
+    "commander": "^2.8.1"
+  },
+  "bin": {
+    "iboot": "./bin/iboot"
+  }
+}

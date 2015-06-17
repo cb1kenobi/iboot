@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+
+/**
+ * Command line interface for controlling an iBoot Remote Power Control device.
+ *
+ * @copyright
+ * Copyright (c) Copyright (c) 2015 Chris Barber
+ *
+ * @license
+ * Licensed under the terms of the MIT License
+ * Please see the LICENSE included with this distribution for details.
+ */
+
+'use strict';
+
+var iboot = require('../index'),
+    program = require('commander'),
+    ver = require('../package.json').version,
+    cmdrHelp = program.outputHelp;
+
+program.outputHelp = function (err) {
+    console.info('iboot Command Line Tool, version ' + ver);
+    err && console.error('\nERROR: ' + err);
+    cmdrHelp.call(program);
+    console.info('  You may also use environment variables: HOST, PORT, PASSWORD, and TIMEOUT.\n');
+};
+
+program
+    .version(ver)
+    .usage('[' + iboot.actions.join('|') + ']')
+    .option('-H, --host <ip or hostname>', 'the IP address or hostname', String)
+    .option('-p, --port <port>', 'the port to connect to [80]', Number, 80)
+    .option('-s, --password <pass>', 'the password to use', String)
+    .option('-t, --timeout <ms>', 'timeout in milliseconds [10000]', Number, 10000)
+    .parse(process.argv);
+
+function help(err) {
+    program.outputHelp(err);
+    process.exit(err ? 1 : 0);
+}
+
+if (!program.args.length) {
+    help();
+}
+
+var action = program.args[0];
+if (iboot.actions.indexOf(action) === -1) {
+    help('Invalid action: ' + action);
+}
+
+var cfg = {
+    host: program.host || process.env.HOST,
+    port: program.port || process.env.PORT || 80,
+    password: program.password || process.env.PASSWORD || '',
+    timeout: program.timeout || process.env.TIMEOUT
+};
+
+if (!cfg.host) {
+    help('Missing required --host');
+}
+
+if (!cfg.password) {
+    help('Missing required --password');
+}
+
+try {
+    var conn = new iboot(cfg);
+    conn.execute(action, function (err, status) {
+        err && help(err.message);
+        console.info(status);
+    });
+} catch (ex) {
+    help(ex.message || ex.toString());
+}
