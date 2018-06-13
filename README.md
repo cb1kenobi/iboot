@@ -2,7 +2,7 @@
 
 `iboot` is an unofficial library for controlling [Dataprobe's iBoot® Remote Power Control](http://dataprobe.com/iboot.html) device.
 
-[![NPM](https://nodei.co/npm/iboot.png?downloads=true&stars=true)](https://nodei.co/npm/iboot/)
+[![NPM](https://nodei.co/npm/iboot.png?downloads=true&stars=true)](https://nodei.co/npm/iboot/) [![Greenkeeper badge](https://badges.greenkeeper.io/cb1kenobi/iboot.svg)](https://greenkeeper.io/)
 
 ## Installation
 
